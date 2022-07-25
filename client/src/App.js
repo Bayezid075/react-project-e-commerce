@@ -1,16 +1,18 @@
 import { Header } from "./components/header/Header";
 import { Footer } from "./components/footer/Footer";
 import { Container } from "react-bootstrap";
+import { HomeScreen } from "./screen/HomeScreen";
+import "./index.css";
 function App() {
   return (
     <div className="App">
-      <main>
-        <Header />{" "}
+      <Header />
+      <main className="py-3">
         <Container>
-          <h1> Shop </h1>{" "}
+          <HomeScreen />
         </Container>
-        <Footer />
       </main>
+      <Footer />
     </div>
   );
 }
