@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
   Row,
@@ -10,9 +10,20 @@ import {
   ListGroupItem,
 } from "react-bootstrap";
 import ProductRating from "../components/Product/ProductRating";
-import products from "../products";
+
+import axios from "axios";
 export const ProductScreen = ({ match }) => {
-  const MatchProduct = products.find((p) => p._id === match.params.id);
+  const [product, setProduct] = useState({});
+  console.log(product);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      const { data } = await axios.get(`/api/products/${match.params.id}`);
+
+      setProduct(data);
+    };
+    fetchProducts();
+  }, []);
 
   return (
     <div>
@@ -21,24 +32,22 @@ export const ProductScreen = ({ match }) => {
       </Link>
       <Row>
         <Col md={6}>
-          <Image src={MatchProduct.image} alt={MatchProduct.name} />
+          <Image src={product.image} alt={product.name} />
         </Col>
         <Col md={3}>
           <ListGroup variant="flush">
             <ListGroup.Item>
-              <h3> {MatchProduct.name} </h3>
+              <h3> {product.name} </h3>
             </ListGroup.Item>
             <ListGroup.Item>
               <ProductRating
-                value={MatchProduct.rating}
-                text={`${MatchProduct.numReviews} Reviews `}
+                value={product.rating}
+                text={`${product.numReviews} Reviews `}
               />
             </ListGroup.Item>
 
-            <ListGroupItem>Price : {MatchProduct.price}</ListGroupItem>
-            <ListGroupItem>
-              Descriptions : {MatchProduct.description}
-            </ListGroupItem>
+            <ListGroupItem>Price : {product.price}</ListGroupItem>
+            <ListGroupItem>Descriptions : {product.description}</ListGroupItem>
           </ListGroup>
         </Col>
         <Col md={3}>
@@ -49,7 +58,7 @@ export const ProductScreen = ({ match }) => {
                   <Col>Price :</Col>
 
                   <Col>
-                    <strong>${MatchProduct.price} </strong>
+                    <strong>${product.price} </strong>
                   </Col>
                 </Row>
               </ListGroupItem>
@@ -59,7 +68,7 @@ export const ProductScreen = ({ match }) => {
                   <Col> Status :</Col>
 
                   <Col>
-                    {MatchProduct.countInStock > 0
+                    {product.countInStock > 0
                       ? "Product Avalilable"
                       : "OUT OF STOCK "}
                   </Col>
@@ -69,7 +78,7 @@ export const ProductScreen = ({ match }) => {
                 <Button
                   className="btn-block"
                   type="button"
-                  disabled={MatchProduct.countInStock === 0}
+                  disabled={product.countInStock === 0}
                 >
                   Add To Cart
                 </Button>

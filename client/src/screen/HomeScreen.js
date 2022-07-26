@@ -14,7 +14,7 @@ export const HomeScreen = () => {
       setProducts(data);
     };
     fetchProducts();
-  });
+  }, []);
 
   return (
     <div>
