@@ -1,5 +1,5 @@
 import React from "react";
-import { Navbar, Nav, Container, NavDropdown, Button } from "react-bootstrap";
+import { Navbar, Nav, Container } from "react-bootstrap";
 
 export const Header = () => {
   return (
@@ -15,7 +15,6 @@ export const Header = () => {
               navbarScroll
             >
               <Nav.Link href="/cart">
-                {" "}
                 <i className="fas fa-shopping-cart"></i> Cart
               </Nav.Link>
               <Nav.Link href="/login">
